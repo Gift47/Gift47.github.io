@@ -927,35 +927,19 @@ body.splash-active .proposal-section {
 }
 
 /* ================================
-   GIFT SECTION FIXES
+   COMPLETE GIFT SECTION CSS
    ================================ */
 
-/* Fix gift content layout - move everything down and improve spacing */
-.gift-content {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  max-width: 900px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 5vh; /* Reduced from 10vh */
-  padding-bottom: 5vh; /* Added bottom padding */
-  margin: 0 auto; /* Horizontal centering */
-}
-
-/* Ensure gift section allows default scrolling only */
+/* Main gift section container */
 .gift-section {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: flex-start; /* Changed from center to flex-start */
-  justify-content: center; /* Horizontal centering */
-  padding: 3rem 2rem; /* Reduced vertical padding */
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
   background: linear-gradient(135deg, #1a0a1e 0%, #2d1b3d 50%, #1a0a1e 100%);
-  overflow-y: auto; /* Only this has scroll */
+  overflow-y: auto;
   opacity: 0;
   transition: opacity 1s ease;
 }
@@ -968,29 +952,46 @@ body.splash-active .proposal-section {
   width: 100vw;
   height: 100vh;
   z-index: 10000;
-  display: flex; /* Re-apply flex for centering */
-  align-items: flex-start; /* Changed from center to flex-start */
-  justify-content: center; /* Horizontal centering */
-  overflow-y: auto; /* Allow scrolling on section only */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
 }
 
-/* Reduce title margin */
+/* Gift content wrapper */
+.gift-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin: 0 auto;
+}
+
+/* Gift section title */
 .gift-title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
-  margin-bottom: 0.5rem; /* Reduced from 1rem */
+  margin-bottom: 0.25rem;
   color: var(--color-accent);
   text-shadow: 0 0 20px var(--color-glow);
 }
 
-/* Keep subtitle small margin and ensure it hides properly */
+/* Gift subtitle (tap to open text) */
 .gift-subtitle {
   font-family: var(--font-accent);
   font-size: 1.2rem;
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 1.5rem; /* Reduced from 3rem */
+  margin-bottom: 0.75rem;
   animation: pulse-text 2s ease-in-out infinite;
   transition:
     opacity 0.5s ease,
@@ -999,106 +1000,258 @@ body.splash-active .proposal-section {
 
 .gift-subtitle.hidden {
   opacity: 0;
-  visibility: hidden; /* Added visibility hidden */
+  visibility: hidden;
   pointer-events: none;
 }
 
-/* Reduce gift box container margin */
+/* Gift box container */
 .gift-box-container {
   position: relative;
   width: 400px;
   height: 400px;
-  margin: 1rem auto; /* Reduced from 2rem */
+  margin: 0.5rem auto;
   perspective: 1000px;
+  z-index: 20;
 }
 
-/* Reduce spacing in gifts display */
+/* Gift box itself */
+.gift-box {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 30;
+  opacity: 1;
+  visibility: visible;
+}
+
+.gift-box:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.gift-box.opening {
+  pointer-events: none;
+}
+
+/* Gift base */
+.gift-base {
+  position: absolute;
+  width: 300px;
+  height: 250px;
+  bottom: 0;
+  background: linear-gradient(135deg, #ff0844, #ff758c);
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Gift lid */
+.gift-lid {
+  position: absolute;
+  width: 320px;
+  height: 80px;
+  top: -20px;
+  left: -10px;
+  background: linear-gradient(135deg, #ff0844, #ff758c);
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  transform-origin: bottom;
+  z-index: 10;
+}
+
+.gift-box.opening .gift-lid {
+  animation: lid-open 1s ease-out forwards;
+}
+
+@keyframes lid-open {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(-100deg);
+  }
+  100% {
+    transform: rotateX(-130deg) translateY(-50px);
+    opacity: 0;
+  }
+}
+
+/* Gift ribbon horizontal */
+.gift-ribbon-horizontal {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 5;
+}
+
+.gift-ribbon-horizontal::before,
+.gift-ribbon-horizontal::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  top: 0;
+}
+
+.gift-ribbon-horizontal::before {
+  left: -30px;
+  border-width: 20px 30px 20px 0;
+  border-color: transparent #ffd700 transparent transparent;
+}
+
+.gift-ribbon-horizontal::after {
+  right: -30px;
+  border-width: 20px 0 20px 30px;
+  border-color: transparent transparent transparent #ffd700;
+}
+
+/* Gift ribbon vertical */
+.gift-ribbon-vertical {
+  position: absolute;
+  width: 40px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+/* Gift bow */
+.gift-bow {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 60px;
+  z-index: 20;
+}
+
+.gift-bow::before,
+.gift-bow::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 60px;
+  background: #ffd700;
+  border-radius: 50% 50% 0 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.gift-bow::before {
+  left: 0;
+  transform: rotate(-45deg);
+}
+
+.gift-bow::after {
+  right: 0;
+  transform: rotate(45deg) scaleX(-1);
+}
+
+/* Gift reveal container */
+.gift-reveal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+  z-index: 5;
+}
+
+.gift-reveal.visible {
+  animation: reveal-appear 1s ease-out 0.8s forwards;
+  z-index: 50;
+}
+
+@keyframes reveal-appear {
+  to {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+  }
+}
+
+/* Gift sparkles */
+.gift-sparkles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* Gift content inner */
+.gift-content-inner {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Gifts display */
 .gifts-display {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 2rem; /* Reduced from 3rem */
-  margin: 0 auto 1rem; /* Reduced from 2rem */
+  gap: 2rem;
+  margin: 0 auto 1rem;
   flex-wrap: nowrap;
-  padding: 0.5rem; /* Reduced from 1rem */
+  padding: 0.5rem;
 }
 
-/* Reduce gift message title margin */
-.gift-message-title {
-  font-family: var(--font-display);
-  font-size: 2rem;
+/* Individual gift item */
+.gift-item {
+  opacity: 0;
+  transform: translateY(30px) scale(0.8);
+  animation: gift-appear 0.8s ease-out forwards;
+  flex-shrink: 0;
+}
+
+.gift-reveal.visible .gift-flower {
+  animation-delay: 0.3s;
+}
+.gift-reveal.visible .gift-teddy {
+  animation-delay: 0.5s;
+}
+.gift-reveal.visible .gift-chocolate {
+  animation-delay: 0.7s;
+}
+.gift-reveal.visible .gift-heart {
+  animation-delay: 0.9s;
+}
+
+@keyframes gift-appear {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Gift label */
+.gift-label {
+  font-family: var(--font-accent);
+  font-size: 0.9rem;
   color: var(--color-accent);
-  margin-bottom: 0.5rem; /* Reduced from 1rem */
-  margin-top: 0.5rem; /* Reduced from 1rem */
-  text-shadow: 0 0 10px var(--color-glow);
-}
-
-/* Adjust gift message to prevent bottom cutoff */
-.gift-message {
-  font-family: var(--font-body);
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 2rem 4rem 2rem; /* Increased bottom padding from 2rem to 4rem */
-}
-
-/* Mobile responsive adjustments */
-@media (max-width: 768px) {
-  .gift-content {
-    padding-top: 4vh;
-    padding-bottom: 4vh;
-  }
-
-  .gift-section {
-    padding: 2rem 1.5rem;
-  }
-
-  .gifts-display {
-    gap: 1.5rem;
-    margin: 0 auto 0.5rem;
-  }
-
-  .gift-message {
-    font-size: 1rem;
-    padding: 0 1.5rem 3rem 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .gift-content {
-    padding-top: 3vh;
-    padding-bottom: 3vh;
-  }
-
-  .gift-section {
-    padding: 1.5rem 1rem;
-  }
-
-  .gift-box-container {
-    width: 280px;
-    height: 350px;
-    margin: 0.5rem auto;
-  }
-
-  .gifts-display {
-    gap: 1rem;
-    padding: 0.25rem;
-    flex-wrap: wrap;
-    margin: 0 auto 0.5rem;
-  }
-
-  .gift-message-title {
-    font-size: 1.5rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .gift-message {
-    font-size: 0.95rem;
-    padding: 0 1rem 2.5rem 1rem;
-  }
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
 }
 
 /* ===== ROSE FLOWER ===== */
@@ -1409,15 +1562,17 @@ body.splash-active .proposal-section {
   }
 }
 
+/* Gift message title */
 .gift-message-title {
   font-family: var(--font-display);
   font-size: 2rem;
   color: var(--color-accent);
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
   text-shadow: 0 0 10px var(--color-glow);
 }
 
+/* Gift message */
 .gift-message {
   font-family: var(--font-body);
   font-size: 1.2rem;
@@ -1425,9 +1580,10 @@ body.splash-active .proposal-section {
   color: rgba(255, 255, 255, 0.9);
   max-width: 700px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 2rem 4rem 2rem;
 }
 
+/* Gift confetti canvas */
 #gift-confetti-canvas {
   position: absolute;
   top: 0;
@@ -1436,6 +1592,127 @@ body.splash-active .proposal-section {
   height: 100%;
   pointer-events: none;
   z-index: 1000;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+@media (max-width: 768px) {
+  .gift-content {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    min-height: 100vh;
+  }
+
+  .gift-section {
+    padding: 1.5rem;
+  }
+
+  .gift-box-container {
+    width: 320px;
+    height: 350px;
+  }
+
+  .gift-box {
+    width: 250px;
+    height: 250px;
+  }
+
+  .gift-base {
+    width: 250px;
+    height: 200px;
+  }
+
+  .gift-lid {
+    width: 270px;
+    height: 65px;
+  }
+
+  .gifts-display {
+    gap: 1.5rem;
+    margin: 0 auto 0.5rem;
+  }
+
+  .gift-message {
+    font-size: 1rem;
+    padding: 0 1.5rem 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gift-content {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    min-height: 100vh;
+  }
+
+  .gift-section {
+    padding: 1rem;
+  }
+
+  .gift-box-container {
+    width: 280px;
+    height: 350px;
+    margin: 0.25rem auto;
+  }
+
+  .gift-box {
+    width: 200px;
+    height: 200px;
+  }
+
+  .gift-base {
+    width: 200px;
+    height: 160px;
+  }
+
+  .gift-lid {
+    width: 220px;
+    height: 55px;
+  }
+
+  .gifts-display {
+    gap: 1rem;
+    padding: 0.25rem;
+    flex-wrap: wrap;
+    margin: 0 auto 0.5rem;
+  }
+
+  .gift-item {
+    transform: scale(0.75);
+  }
+
+  .flower-container {
+    width: 80px;
+    height: 120px;
+  }
+
+  .teddy-bear {
+    width: 70px;
+    height: 100px;
+  }
+
+  .chocolate-box {
+    width: 70px;
+    height: 70px;
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .heart-pillow {
+    font-size: 3.5rem;
+  }
+
+  .gift-message-title {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gift-message {
+    font-size: 0.95rem;
+    padding: 0 1rem 2.5rem 1rem;
+  }
 }
 
 /* ================================
