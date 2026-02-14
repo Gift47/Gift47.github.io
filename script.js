@@ -944,29 +944,22 @@ function initGiftSection() {
   });
 
   function openGift() {
-    giftBox.classList.add("opening");
+  giftBox.classList.add("opening");
 
-    // Hide the "Tap to open" text
-    if (giftSubtitle) {
-      giftSubtitle.classList.add("hidden");
-    }
-
-    // Play gift opening sound
-    if (giftOpenAudio) {
-      giftOpenAudio.currentTime = 0;
-      giftOpenAudio.play().catch((e) => console.log("Gift audio:", e));
-    }
-
-    // Show reveal content after lid animation
-    setTimeout(() => {
-      giftBox.style.opacity = "0";
-      giftReveal.classList.add("visible");
-      launchGiftConfetti();
-    }, 800);
-
-    console.log("🎁 Gift opened!");
+  // Hide the "Tap to open" text
+  if (giftSubtitle) {
+    giftSubtitle.classList.add("hidden");
   }
 
+  // Show reveal content after lid animation
+  setTimeout(() => {
+    giftBox.style.opacity = "0";
+    giftReveal.classList.add("visible");
+    launchGiftConfetti();
+  }, 800);
+
+  console.log("🎁 Gift opened!");
+}
   function launchGiftConfetti() {
     const canvas = giftConfettiCanvas;
     const ctx = canvas.getContext("2d");
@@ -1324,3 +1317,4 @@ trailStyle.textContent = `
     }
 `;
 document.head.appendChild(trailStyle);
+
