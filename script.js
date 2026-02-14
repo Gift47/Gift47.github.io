@@ -1042,7 +1042,7 @@ function initProposalButton(fireworksController) {
   // Yes button click handler
   yesButton.addEventListener("click", () => {
     createHeartExplosion(yesButton);
-    music.play().catch((e) => console.log("Music:", e));
+   
 
     // Start fireworks
     if (fireworksController) {
@@ -1315,5 +1315,6 @@ trailStyle.textContent = `
     }
 `;
 document.head.appendChild(trailStyle);
+
 
 
