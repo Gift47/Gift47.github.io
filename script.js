@@ -931,13 +931,11 @@ function initFireworks() {
 function initGiftSection() {
   const giftBox = document.getElementById("gift-box");
   const giftReveal = document.getElementById("gift-reveal");
-  const giftOpenAudio = document.getElementById("gift-open-audio");
+  
   const giftConfettiCanvas = document.getElementById("gift-confetti-canvas");
   const giftSubtitle = document.querySelector(".gift-subtitle");
 
-  if (giftOpenAudio) {
-    giftOpenAudio.volume = 0.7;
-  }
+
 
   giftBox.addEventListener("click", () => {
     openGift();
@@ -1317,4 +1315,5 @@ trailStyle.textContent = `
     }
 `;
 document.head.appendChild(trailStyle);
+
 
